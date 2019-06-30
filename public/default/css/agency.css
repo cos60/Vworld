@@ -1,0 +1,80 @@
+
+
+.agency-nav{
+    position: relative;
+    left: 20px;
+    top: 30px;
+    max-width: 150px;
+
+}
+.agency-nav ul li{
+    border-radius: 5px;
+    height: 80px;
+    line-height: 80px;
+}
+.agency-nav ul li:hover{
+    color: #fff !important;
+}
+
+.agency-nav ul li.active{
+    color:#fff !important;
+}
+.agency-content{
+    position: relative;
+    top: 30px;
+    padding: 30px 0 30px 0;
+    max-height: 700px;
+    overflow-y: scroll;
+
+ }
+.model-area{
+    position: relative;
+
+}
+.model-area-one{
+    width: 95%;
+    box-shadow: 6px 6px 15px #ccc !important;
+    padding: 10px;
+}
+. h2{
+    margin-top: 30px;
+}
+.agency-travel{
+    display: none;
+}
+.agency-travel .input-group{
+    margin-top: 30px;
+}
+.model-area .detail-message{
+    width: 180px;
+    color: #000;
+    left: -30%;
+    position: absolute;
+
+
+    cursor: pointer;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+
+}
+.model-area .detail-message p{
+    font-size: 18px;
+    color: #fff;
+    background: #60BDE8;
+}
+.model-area .detail-message p a{
+    text-decoration: none;
+    color: #fff;
+
+}
+
+.model-area:hover .detail-message {
+   left: 0;
+    opacity: 1;
+
+
+}
+.button_function button{
+    margin-right: 10px;
+}

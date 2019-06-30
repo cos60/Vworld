@@ -1,0 +1,61 @@
+{{include 'default/public/header.html'}}
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+<div class="container-fluid container-box">
+    <div class="row">
+        <div class="nav-left left-nav text-left">
+            <button class="nav-shoWButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <button class="nav-shoWButtonX">
+                <span>X</span>
+            </button>
+            <ul class="nav flex-column nav-pills" id="collapsibleNavbar">
+                <li class="nav-item nav-list">
+                    <a class="nav-link active"  onclick="showOrHidden(this)">发布的活动</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="model-content container col-md-9 text-left">
+            <div class="view-tro content-one">
+                <div class="container-fluid">
+                    <div class="row">
+                        {{each activity}}
+                        <div class="model-area col-md-6 col-sm-6 col-lg-4">
+                            <div class="model-area-one shadow p-3 mb-5 bg-white rounded">
+                                <div style="height: 200px; width: 100%;overflow-y: hidden;">
+                                    <a href="/views/join?id={{@$value._id}}"><img src="/{{$value.img_url}}" alt="" width="100%" ></a>
+                                </div>
+
+                                <h4 class="text-left">{{$value.toPlace}}</h4>
+                                <div class="descript text-left">
+                                    <p>{{@$value.description}}</p>
+                                </div>
+                                <hr>
+                                <div class="text-left font-icon">
+                                    <i class="fa fa-eye"></i>12
+                                    <i class="fa fa-heart"></i>16
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{{include 'default/public/footer.html'}}
+<script src="../../public/default/js/tap.js"></script>
+
+<script>
+    var ue = UE.getEditor('contentD');
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全景图预览</title>
+    <link rel="stylesheet" href="/default/css/panovr.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/default/Photo-Sphere-Viewer/js/three.min.js"></script>
+    <script src="/default/Photo-Sphere-Viewer/js/photo-sphere-viewer.min.js"></script>
+    <script src="/default/Photo-Sphere-Viewer/js/DeviceOrientationControls.js"></script>
+    <script src="/default/js/jquery.qrcode.min.js"></script>
+
+    <!--[if IE]>
+    <script src="http://www.jq22.com/jquery/html5.min.js"></script>
+    <![endif]-->
+    <style>
+        .jq22-header{ text-align: center; }
+    </style>
+</head>
+<body>
+<button id="buttonQr">二维码显示</button>
+<div id="qrcode" class="panovrQrcode"></div>
+<div class="jq22-container">
+    <div id="container"></div>
+</div>
+<script>
+
+        $('#buttonQr').mouseenter(function(){
+            $('.panovrQrcode').css({"display":"block"})
+        })
+        $('#buttonQr').mouseleave(function(){
+            $('.panovrQrcode').css({"display":"none"})
+        })
+
+</script>
+<script>
+    window.onload = function() {
+            loadPredefinedPanorama()
+        //生成100*100(宽度100，高度100)的二维码
+        $('#qrcode').qrcode({
+            render: "canvas", //也可以替换为table
+            width: 100,
+            height: 100,
+            text: "172.26.202.1:8080{{url}}"
+        });
+    };
+
+    // Load the predefined panorama
+    function loadPredefinedPanorama(evt) {
+
+        var height = $(window).height();
+        var div = document.getElementById('container');
+        var PSV = new PhotoSphereViewer({
+            // Path to the panorama
+            panorama: '/{{panoList.img_url}}',
+            // Container
+            container: div,
+
+            // Deactivate the animation
+            time_anim: false,
+            lang: {
+                autorotate: 'Automatic rotation',
+                zoom: 'Zoom',
+                zoomOut: 'Zoom out',
+                zoomIn: 'Zoom in',
+                download: 'Download',
+                fullscreen: 'Fullscreen',
+                markers: 'Markers',
+                gyroscope: 'Gyroscope'
+            },
+
+            // Display the navigation bar
+            navbar: true,
+
+            // Resize the panorama
+            size: {
+                width: '100%',
+                height: height
+            },
+            onready: function(){
+                PSV.toggleDeviceOrientation()
+            }
+        });
+
+
+    }
+
+    // Load a panorama stored on the user's computer
+    function upload() {
+        // Retrieve the chosen file and create the FileReader object
+        var file = document.getElementById('pano').files[0];
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var div = document.getElementById('your-pano');
+
+            var PSV = new PhotoSphereViewer({
+                // Panorama, given in base 64
+                panorama: reader.result,
+
+                // Container
+                container: div,
+
+                // Deactivate the animation
+                time_anim: false,
+
+                // Display the navigation bar
+                navbar: true,
+
+                // Resize the panorama
+                size: {
+                    width: '100%',
+                    height: '500px'
+                }
+            });
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+
+</script>
+<script>
+
+</script>
+</body>
+</html>

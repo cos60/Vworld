@@ -1,0 +1,62 @@
+{{include 'default/public/header.html'}}
+<script src="/api/basic.js"></script>
+<div class="container-fluid top-search">
+    <div class="search-box" style="max-width: 700px; margin: 0 auto">
+        <form action="/search" method="get">
+            <div class="input-group">
+
+                <input type="text" class="form-control" id="searchID"  autocomplete="off" name="searchValue" oninput="api.searchList(this.value,'views')" onblur="displaylist()" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="submit">Go</button>
+                </div>
+            </div>
+        </form>
+        <div class="">
+            <ul class="text-left search-list">
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid panoramaAndHotel">
+    <div class="container">
+        <div class="row">
+            {{each views}}
+            <div class="model-area col-md-6 col-sm-6 col-lg-4">
+                <div class="model-area-one shadow p-3 mb-5 bg-white rounded">
+                    <div style="height: 200px; width: 100%;overflow-y: hidden;">
+                        <a href="/views/viewsDet?id={{@$value._id}}"><img src="{{$value.img_url}}" alt="" width="100%" ></a>
+                    </div>
+
+                    <h4 class="text-left">{{$value.title}}</h4>
+                    <div class="descript text-left">
+                        <p>{{$value.description}}</p>
+                    </div>
+                    <hr>
+                    <div class="text-left font-icon">
+                        <i class="fa fa-eye"></i>{{$value.hot}}
+                        <i class="fa fa-heart"></i>16
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+
+</div>
+<script src="/default/js/keydown.js"></script>
+<script>
+    $(document).ready(function () {
+        if($('.search-list').css("display")==="block"){
+            console.log($('.search-list').css("display"));
+        }
+    })
+    function displaylist() {
+        $('.search-list').css({"display":"none"})
+        ///   console.log($('.search-list').css("display"));
+    }
+</script>
+{{include 'default/public/footer.html'}}
+</body>
+</html>

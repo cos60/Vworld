@@ -1,0 +1,274 @@
+<link rel="stylesheet" href="/default/css/agency.css">
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>V视界</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/admin/js/jquery-2.0.3.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/default/css/style.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
+
+</head>
+<body>
+<header class="container-fluid top-nav">
+    <nav class="navbar navbar-expand-md  nav-pills ">
+        <!-- Brand -->
+        <a class="navbar-brand" style="color:#fff;" href="/">V视界</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <i class="fa fa-align-justify"></i>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-end " id="" >
+           <ul class=" nav navbar-nav ">
+
+               <li class="nav-item top-nav-item">
+                   {{if G.agencyinformations===null}}
+                        <a class="nav-link" href="/agencyLogin">登录</a>
+                   {{else}}
+                        <a class="nav-link" href="/agencyLogin/agencyLoginOut">退出</a>
+                   {{/if}}
+               </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="row">
+    <div class="agency-nav col-md-2">
+        <ul class="nav flex-column nav-pills" id="collapsibleNavbar">
+            <li class="nav-item nav-list active">
+                <a class="nav-link"  onclick="showOrHidden(this)">我的发布</a>
+            </li>
+            <li class="nav-item nav-list">
+                <a class="nav-link"  onclick="showOrHidden(this)">发布旅行</a>
+            </li>
+            <li class="nav-item nav-list">
+                <a class="nav-link"  onclick="showOrHidden(this)">我的信息</a>
+            </li>
+        </ul>
+    </div>
+    <div class="agency-content col-md-9 ">
+        <div class="container-fluid agency-publish text-left">
+            <div class="row">
+                {{each activity}}
+                <div class="model-area col-md-6 col-sm-6 col-lg-4">
+                    <div class="model-area-one">
+                        <div style="height: 150px; width: 100%;overflow-y: hidden;">
+                           <img src="{{/$value.img_url}}" alt="" width="100%" >
+                        </div>
+                        <h4 class="text-left"><a href="">{{$value.toPlace}}</a><span style="float: right;" class="text-right"><i></i></span></h4>
+                        <div class="descript text-left">
+                            <p>时间：{{$value.start_time}}-{{$value.end_time}}</p>
+                            <p>已参与：{{$value.joinNum}}1</p>
+                            {{if $value.status==1}}
+                            <p class="actStatus">进行中</p>
+                            {{else}}
+                            <p>活动已经取消</p>
+                            {{/if}}
+                        </div><hr>
+                        <div class="text-left font-icon">
+                            <i class="fa fa-fire"></i>{{$value.joinNum}}
+
+                        </div>
+
+                        <div class="text-center detail-message" >
+                            <p class="center"><a href="agency/detail?id={{@$value._id}}">详细信息</a></p>
+                            {{if $value.status==1}}
+                            <p class="center cencleActivity"><a onclick="changeStatus('activity','status','{{@$value._id}}',this)">取消活动</a></p>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+
+        <script>
+
+            function changeStatus(collection,attr,id,el){
+
+              //  alert(that)
+                if(confirm('真的要取消该项活动吗？该操作不会删除该活动'))
+                var collection = collection;
+                var id = id
+                $.get('api/changeStatus',{collection:collection,attr:attr,id:id},function (data) {
+                    if(data.success){
+                        $(el).remove();
+                        $('.actStatus').val('活动已经取消')
+                    }
+                })
+            }
+        </script>
+
+
+
+        <div class="container-fluid agency-travel text-left">
+            <form action="/agency/doAdd" method="post"  enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>
+                            选择景点：
+                            <select name="pid" id="pid" class="form-control">
+                                {{each views}}
+                                    <option value="{{@$value._id}}" class="form-control">{{$value.title}}</option>
+                                {{/each}}
+                            </select>
+
+                            <input type="hidden" name="author" value="{{@message._id}}">
+
+                        </p>
+
+                        <p><input type="hidden" name="title" id="catename" value="{{views.title}}" class="form-control"></p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>限制人数：<input type="text" name="number" class="form-control"></p>
+                        <p>封面图片：<input type="file" name="pic" class="form-control"></p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>开始时间：<input type="date" name="startTime" class="form-control"></p>
+                        <p>结束时间：<input type="date" name="endTime" class="form-control"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <p>描述一下：</p>
+                    <div id="contentD" type="text/plain" style="width:98%;height:450px;"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p> </p>
+                        <input type="submit"  class="btn btn-success form-control">
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div class="container-fluid agency-travel text-left">
+            <div class="panoramaAndHotel">
+                <div class="row">
+                    <div class="col-md-12"  >
+                        <div style="border-radius: 50%;box-shadow: 0px 0px 10px #000;width: 150px;height: 150px; margin: auto;overflow: hidden;">
+                            <img src="admin/images/gallery/image-4.jpg" alt="" width="150px" height="150px">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4 text-left">
+                        <p>帐户名称：<input type="text" name="user_name" value="{{message.enterprise_name}}" id="user_name" disabled class="form-control changedisabled"></p>
+                        <p>入驻时间：<input type="text" name="birthday"  id="birthday" value="{{@message.add_time| dateFormat}}" disabled name="endTime" class="form-control changedisabled"></p>
+                    </div>
+                    <div class="col-md-4 text-left">
+                        <p>对公手机：<input type="text" name="phone"  value="{{message.phone}}" id="phone" disabled class="form-control changedisabled"></p>
+
+                    </div>
+                    <div class="col-md-4 text-left">
+                        <p>对公QQ：<input type="text"  name="qq" value="{{message.qq}}" id="userQq" disabled class="form-control changedisabled"></p>
+                        <input type="hidden" value="" id="userID"  name="id"  class="form-control changedisabled">
+                    </div>
+
+                </div>
+                <div class="row">
+                    <p><button type="submit" class="btn btn-outline-primary" id="saveChange" style="display: none;" onclick="changeUserInfo()">保存</button></p>
+                </div>
+
+
+                <script>
+                    function changeUserInfo(){
+
+                        var user_name = $('#user_name').val()
+                        var birthday = $('#birthday').val()
+                        var phone = $('#phone').val()
+                        var qq = $('#userQq').val()
+                        var id = $('#userID').val()
+                        var json = {user_name,birthday,phone,qq,id}
+                        $.get('Myroom/changeInfo',json ,function (data) {
+                            alert(data.message);
+                            $('#saveChange').css({"display":"none"})
+                            $(".changedisabled").attr("disabled",true);
+                        })
+                    }
+
+
+
+
+
+                </script>
+
+
+                <div class="row">
+                    <p><button class="btn btn-outline-primary" id="changeDisable">修改</button></p>
+                </div>
+
+                <h3>旅社相册</h3>
+                <div class="row">
+                    <div class="model-area col-md-4 col-sm-4 col-lg-4">
+                        <img src="admin/images/gallery/image-1.jpg" width="100%" alt="">
+                    </div>
+                    <div class="model-area col-md-4 col-sm-4 col-lg-4">
+                        <img src="admin/images/gallery/image-1.jpg" width="100%" alt="">
+                    </div>
+                    <div class="model-area col-md-4 col-sm-4 col-lg-4">
+                        <img src="admin/images/gallery/image-1.jpg" width="100%" alt="">
+                    </div>
+                </div>
+                <script>
+                    $('#changeDisable').click(function () {
+                        //alert(123123);
+                        // $('.changedisabled').removeAttrs('changedisabled');
+                        $(".changedisabled").attr("disabled",false);
+                        $('#saveChange').css({"display":"block"})
+
+                    })
+                </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function showOrHidden(a) {
+        var parent = a.parentNode;
+        $(parent).addClass('active');
+        var index =  $(parent).index();
+        $('.agency-content .container-fluid ').eq(index).css({"display":"block"})
+        $('.agency-content .container-fluid ').eq(index).siblings().css({"display":"none"})
+
+        $(parent).css({"color":"#fff"})
+        $(parent).siblings('li').removeClass('active');
+        $(parent).siblings('li').css({"color":"#000"});
+    }
+
+
+</script>
+<script>
+    var ue = UE.getEditor('contentD');
+    var pidId = document.getElementById('pid');
+    var catename = document.getElementById('catename')
+    var options = document.getElementsByTagName('option');
+    pidId.onchange = function () {
+        for(var i =0;i<options.length;i++){
+            if (options[i].selected){
+                catename.value = options[i].innerHTML.trim();
+            }
+        }
+    }
+</script>
+<!--{{include 'default/public/footer.html'}}-->
+</body>
+</html>

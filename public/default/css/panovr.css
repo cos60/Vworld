@@ -1,0 +1,13 @@
+.panovrQrcode{
+    display: none;
+    position: fixed;
+    z-index: 111;
+    top: 50px;
+}
+
+@media (max-width: 768px) {
+    #buttonQr{
+        display: none;
+    }
+
+}

@@ -1,0 +1,135 @@
+<link rel="stylesheet" href="/default/css/agency.css">
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script><!DOCTYPE html>
+<html>
+<head>
+    <title>V视界</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/admin/js/jquery-2.0.3.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/default/css/style.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
+
+</head>
+<body>
+<header class="container-fluid top-nav">
+    <nav class="navbar navbar-expand-md  nav-pills ">
+        <!-- Brand -->
+        <a class="navbar-brand" style="color:#fff;" href="/">V视界</a>
+
+    </nav>
+
+
+</header>
+<div class="row ">
+    <div class="agency-nav col-md-3">
+        <img src="/{{activity.img_url}}" width="80%" alt="">
+    </div>
+    <div class="agency-content col-md-9 text-left" style="padding: 15px">
+        <div class="row">
+            <div class="col-md-12 text-left" >
+                <h5><a href="/agency?id={{@activity.pid}}">我的发布</a>>详细信息</h5>
+            </div>
+        </div>
+        <div class="row text-left">
+            <div class="col-md-3">
+                <p>目的地点：</p>
+                <input type="text" disabled  value="{{activity.toPlace}}" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <p>限制人数：</p>
+                <input type="text" class="form-control" value="{{activity.superior}}">
+                <p>已参与人数：</p>
+                <input type="text" class="form-control" value="{{activity.joinNum}}">
+            </div>
+            <div class="col-md-3">
+                <p>开始时间：</p>
+                <input type="text" class="form-control" value="{{activity.start_time}}">
+                <p>结束时间：</p>
+                <input type="text" class="form-control" value="{{activity.end_time}}">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <p>简述</p>
+                <div  class="form-control" style="min-height:300px ;">
+                    {{@activity.description}}
+                </div>
+            </div>
+
+        </div>
+        <div class="row text-center button_function" style="margin: 30px auto;">
+            <button class="btn btn-outline-primary" onclick="showUserMessage()">查看报名者信息</button>
+            <button class="btn btn-outline-danger">停止该活动</button>
+            <button class="btn btn-outline-success">重新发布该活动</button>
+        </div>
+        <div class="row showUserMessage" style="display: none;">
+            <div class="col-md-10 ">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <th>姓名</th>
+                    <th>所在地：</th>
+                    <th>手机号</th>
+                    <th>报名时间：</th>
+                    </thead>
+                    <tbody>
+                    {{each formData}}
+                        <tr>
+                            <td>{{$value.userName}}</td>
+                            <td>广东韶关</td>
+                            <td>{{$value.phone}}</td>
+                            <td>{{@$value.add_time | dateFormat}}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+<script>
+    function showUserMessage() {
+        $('.showUserMessage').css({"display":"block"})
+    }
+</script>
+<script>
+
+    function showOrHidden(a) {
+        var parent = a.parentNode;
+        $(parent).addClass('active');
+        var index =  $(parent).index();
+        $('.agency-content .container-fluid ').eq(index).css({"display":"block"})
+        $('.agency-content .container-fluid ').eq(index).siblings().css({"display":"none"})
+
+        $(parent).css({"color":"#fff"})
+        $(parent).siblings('li').removeClass('active');
+        $(parent).siblings('li').css({"color":"#000"});
+    }
+
+
+</script>
+<script>
+    var ue = UE.getEditor('contentD');
+    var pidId = document.getElementById('pid');
+    var catename = document.getElementById('catename')
+    var options = document.getElementsByTagName('option');
+    pidId.onchange = function () {
+        for(var i =0;i<options.length;i++){
+            if (options[i].selected){
+                catename.value = options[i].innerHTML.trim();
+            }
+        }
+    }
+</script>
+<!--{{include 'default/public/footer.html'}}-->
+</body>
+</html>

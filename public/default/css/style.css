@@ -1,0 +1,253 @@
+body{
+	text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.col-md-6, .col-sm-6,.col-lg-4{
+    transition: .5s !important;
+}
+header.top-nav{
+	height: 70px;
+	background: #8C6464;
+}
+
+header nav{
+	padding: 1rem 1rem !important;
+
+}
+.top-search{
+	height: 400px;
+	background: #A66565;
+}
+.top-search input{
+     height: 60px;
+     width:50%;
+ }
+.search-box{
+    position: relative;
+    top: 40%;
+    z-index: 777;
+}
+.search-list{
+    background: #d36e6e;
+   border-radius: 8px;
+    /*display: none;*/
+    list-style: none;
+    padding-left: 0;
+
+
+}
+.search-list li:last-child,.search-list li:first-child{
+    border-radius: 8px;
+
+}
+.search-list  li{
+    height: 40px;
+    color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    line-height: 40px;
+    text-align: left;
+    text-indent: 1em;
+
+
+
+}
+.row{
+    z-index: 10;
+}
+.search-list  li.active{
+    background: #dd5a43;
+}
+.top-search button{
+	height: 60px;
+	width: 100px;
+}
+.model-area{
+    min-height:300px;
+    margin-top: 12px;
+}
+.model-area-one{
+    width: 95%;
+    box-shadow: 0px 0px 10px #ccc;
+    padding: 10px;
+}
+.model-area-one h4 {
+     padding-top: 20px;
+     color: #60BDE8;
+
+}
+.model-area-one h4 a{
+
+    color: #60BDE8;
+
+}
+.model-area-one .descript{
+    color: #838383;
+}
+.model-area-one .font-icon{
+    color:#8B8B8C ;
+}
+.model-area-one hr{
+    margin:0 !important;
+}
+
+.hotel-area{
+
+    margin-top: 12px;
+}
+
+.hotel-area-model{
+    margin-top: 12px;
+    padding: 5px 0 5px 0;
+    box-shadow: 0px 0px 10px #8C6464;
+}
+.left-nav{
+    width: 150px;
+    height: 150px;
+    line-height: 70px;
+    position: relative;
+
+    left: 0;
+    transition: .5s;
+
+}
+
+.nav-shoWButton{
+    position: absolute;
+    top: -10px;
+    right: -50px;
+    width: 40px;
+    height: 38px;
+    border: 1px solid #ccc;
+}
+.nav-shoWButtonX{
+    position: absolute;
+    top: -10px;
+    right: -50px;
+    width: 40px;
+    height: 38px;
+    border: 1px solid #ccc;
+    display: none;
+}
+.nav-shoWButton span{
+     width:25px;
+     display: block;
+     border-bottom: 2px solid #666;
+     line-height: 15px;
+     padding: 3px 0;
+ }
+.nav-shoWButtonX span{
+    width:25px;
+    display: block;
+
+    line-height: 15px;
+    padding: 3px 0;
+}
+.model-content{
+    min-height: 700px;
+    max-height: 700px;
+    overflow-y: scroll;
+    padding: 20px;
+    position: relative;
+    left: 0;
+    transition: .5s;
+    /*box-shadow:  0 0 10px #A66565;*/
+}
+.model-content::-webkit-scrollbar {display:none}
+.container-box{
+    margin-top: 20px;
+    padding: 50px;
+}
+#collapsibleNavbar .active{
+    background-color: #8C6464;
+}
+.nav-list:hover{
+    color: #fff ;
+    background-color: #8C6464;
+    border-radius: .25rem;
+}
+.view-tro{
+    display: block;
+
+    transition: .5s;
+    z-index: 12000;
+}
+.panoramaShow,.strategy,.group,.panoramaShow,.panorama-video{
+    display: none;
+    transition: .5s;
+}
+.group-one{
+    box-shadow: 0 0 10px #A66565;
+    margin-top: 20px;
+    text-align: left;
+}
+.top-nav-item{
+    width: 100px !important;
+    background: #B83838;
+    margin: 0 5px 0 5px ;
+    border-radius: .25rem;
+}
+.top-nav-item:hover{
+    background: #dd5a43;
+}
+.top-nav-item-active{
+    background:#dd5a43 ;
+}
+.top-nav-item a{
+   color: #fff;
+}
+.dropdown .dropdown-menu a{
+    color: #666 !important;
+}
+footer{
+    height: 80px;
+    color: #fff;
+    background: #8C6464;
+    text-align: center;
+}
+footer p{
+    line-height: 60px;
+}
+
+@media(max-width: 768px){
+    .top-nav-item{
+        width: 100% !important;
+        background: #d36e6e;
+        margin: 0 5px 0 5px ;
+        border-radius: .25rem;
+        z-index: 10000;
+        position: relative;
+        top: 15px;
+    }
+    .top-search input{
+        height: 50px;
+        width:80%;
+    }
+    .top-search{
+        height:300px;
+        background: #A66565;
+    }
+    .search-box{
+        position: relative;
+        top: 30%;
+    }
+    .top-search button{
+        height: 50px;
+        width: 100px;
+    }
+
+}
+@media(min-width: 769px){
+    .nav-shoWButton{
+        display: none;
+    }
+
+}
+@media (min-width: 992px){
+    .modal-lg {
+        max-width: 80% !important;
+    }
+}
+#edui_fixedlayer{
+    z-index: 1050 !important;
+}

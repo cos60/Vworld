@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{__ROOT__}}/panorama/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="{{__ROOT__}}/panorama/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="{{__ROOT__}}/panorama/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{{__ROOT__}}/panorama/css/swiper.min.css" />
+    <link rel="stylesheet" href="{{__ROOT__}}/panorama/css/basic.css">
+    <script src="{{__ROOT__}}/default/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{{__ROOT__}}/panorama/js/swiper.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/default/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/default/css/intro.css">
+    <link rel="stylesheet" href="/default/less/reset.css">
+    <link rel="stylesheet" href="/default/less/slide.css">
+    <link rel="stylesheet" href="/default/less/index.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/default/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+{{include 'default/public/header.html'}}
+<div class="VRwindows">
+	<div class="leftContent">
+		<div class="titleTop">
+			<h1>{{panoList.title}}</h1><br>
+			<p>分类： <span>{{panoList.genre}}</span></p>
+            <p><i class="fa fa-eye"></i><span>{{panoList.see}}</span>     <i class="fa fa-heart"></i><span>{{panoList.like}}</span></p>
+		</div>
+        <div class="contentbox">
+            <div class="showImg">
+                <img src="{{__ROOT__}}/{{panoList.img_url}}" alt="" width="100%">
+            </div>
+            <div>
+                <a href="{{__ROOT__}}/panorama/show?id={{@panoList._id}} " target="_blank" class="btn btn-success">点击查看效果</a>
+            </div>
+            <div class="desc">
+            {{panoList.description}}
+            </div>
+        </div>
+        <div class="commentList">
+            {{each comment}}
+            <div class="comment">
+
+                <img src="{{__ROOT__}}/default/image/head (1).jpg" width="75" >
+
+                <div class="commentContent">
+                    <div class="arrow"></div>
+                    <p class="commentTime">{{$value.user_name}}　{{@$value.c_time| dateFormat}}</p>
+                    <p>{{$value.content}}</p>
+                </div>
+
+            </div>
+            <hr>
+            {{/each}}
+
+        </div>
+        <hr>
+        <div class="writeComment">
+            <form action="/panorama/doComment" method="post">
+                <textarea placeholder="你有什么想要说的吗？" name="content" class="form-control" style="width: 80%;height:200px;margin: 0 auto"></textarea>
+                <input type="hidden" name="to_uid" value="{{@panoList.author_uid}}">
+                <input type="hidden" name="comment_id" value="{{@panoList._id}}">
+
+                <input type="hidden" name="user_name" value="{{userinfo.user_name}}">
+
+                <input onclick="return loginOrNot()" type="submit" id="comment" class="btn btn-success" style="margin: 12px auto;" value="发表评论">
+            </form>
+        </div>
+	</div>	
+	<div class="rightNav">
+		<div class="ownMess">
+            <img src="default/image/head (1).jpg" width="120">
+            <h4>五哥</h4>
+        </div>
+        <a href="#" class="btn btn-default">关注他</a>
+        <a href="#" class="btn btn-default">收藏它</a>
+	</div>	
+
+
+</div>
+<div class="footer">
+     <h1>vrshow</h1>    
+</div>
+<script>
+    var a = '{{userinfo}}';
+    function loginOrNot(){
+        if (a===''){
+            alert('您未登录');
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

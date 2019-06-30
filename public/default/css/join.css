@@ -1,0 +1,12 @@
+.joinForm{
+    position: relative;
+    top: 50px;
+}
+.formModel{
+    padding: 50px;
+    box-shadow: 0 0 10px #A66565;
+}
+.storeHead{
+    box-shadow: 0 0 10px #A66565;
+    padding: 20px;
+}

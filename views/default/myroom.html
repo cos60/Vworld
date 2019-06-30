@@ -1,0 +1,101 @@
+{{include 'default/public/header.html'}}
+<style>
+    footer{
+
+    }
+</style>
+<div class="container panoramaAndHotel">
+    <div class="row">
+        <div class="col-md-12"  >
+            <div style="border-radius: 50%;box-shadow: 0px 0px 10px #000;width: 150px;height: 150px; margin: auto;overflow: hidden;">
+                <img src="admin/images/gallery/image-4.jpg" alt="" width="150px" height="150px">
+            </div>
+        </div>
+
+    </div>
+
+
+            <div class="row">
+                <div class="col-md-4 text-left">
+                    <p>帐户名称：<input type="text" name="user_name" value="{{userinfo.user_name}}" id="user_name" disabled class="form-control changedisabled"></p>
+                    <p>我的生日：<input type="date" name="birthday"  id="birthday" value="{{userinfo.birthday}}" disabled name="endTime" class="form-control changedisabled"></p>
+                </div>
+                <div class="col-md-4 text-left">
+                    <p>我的手机：<input type="text" name="phone"  value="{{userinfo.phone}}" id="phone" disabled class="form-control changedisabled"></p>
+
+                </div>
+                <div class="col-md-4 text-left">
+                    <p>我的QQ：<input type="text"  name="qq" value="{{userinfo.qq}}" id="userQq" disabled class="form-control changedisabled"></p>
+                    <input type="hidden" value="{{@userinfo._id}}" id="userID"  name="id"  class="form-control changedisabled">
+                </div>
+            </div>
+            <div class="row">
+                <p><button type="submit" class="btn btn-outline-primary" id="saveChange" style="display: none;" onclick="changeUserInfo()">保存</button></p>
+            </div>
+
+    <script>
+        function changeUserInfo(){
+
+            var user_name = $('#user_name').val()
+            var birthday = $('#birthday').val()
+            var phone = $('#phone').val()
+            var qq = $('#userQq').val()
+            var id = $('#userID').val()
+            var json = {user_name,birthday,phone,qq,id}
+            $.get('Myroom/changeInfo',json ,function (data) {
+                alert(data.message);
+                $('#saveChange').css({"display":"none"})
+                $(".changedisabled").attr("disabled",true);
+            })
+        }
+
+
+
+
+
+    </script>
+
+
+    <div class="row">
+        <p><button class="btn btn-outline-primary" id="changeDisable">修改</button></p>
+    </div>
+    <script>
+        $('#changeDisable').click(function () {
+            //alert(123123);
+           // $('.changedisabled').removeAttrs('changedisabled');
+            $(".changedisabled").attr("disabled",false);
+            $('#saveChange').css({"display":"block"})
+
+        })
+    </script>
+    <h3>我正在参与的抱团</h3>
+    <div class="row">
+        {{each entryList}}
+        <div class="model-area  col-md-6 col-sm-6 col-lg-4">
+            <div class="model-area-one">
+                <div style="height: 150px; width: 100%;overflow-y: hidden;">
+                    <img src="/{{$value[0].img_url}}" alt="" width="100%" >
+                </div>
+                <h4 class="text-left">{{$value[0].toPlace}} <span style="float: right;" class="text-right"><i><!--81元起--></i></span></h4>
+                <div class="descript text-left">
+                    {{@$value[0].description}}
+                </div>
+                <div class="text-left font-icon">
+                    <i class="fa fa-eye"></i>15
+                    <i class="fa fa-heart"></i>16
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{include 'default/public/footer.html'}}
+
+
+<script>
+    var Wheight = $(window).height();
+    //alert(Wheight)
+    $('.panoramaAndHotel').css({"min-height":Wheight-150})
+</script>
+</body>
+</html>

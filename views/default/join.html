@@ -1,0 +1,127 @@
+
+{{include 'default/public/header.html'}}
+<div class="container text-left joinIN" style="padding-top: 12px">
+    <div class="row joinForm ">
+        <div class="col-md-3">
+            <img src="/{{activity.img_url}}" alt="" width="100%" class="center">
+            <div style="color: #666;">
+                <h5 class="text-left" >目的地：{{activity.toPlace}}</h5>
+                <h5 class="text-left" style="">发布者：{{author.enterprise_name}}</h5>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-12 viewsContent" style="height: 200px;overflow: hidden;border-bottom: 1px solid #ccc;padding-top: 20px" >
+                    <p>
+                       {{@activity.description}}
+                    </p>
+                </div>
+                <div class="col-12" style="margin-top: 12px">
+                    <span>已参加人数：<i class="entryCount">{{count}}</i></span>
+                    <button class="btn btn-outline-primary showForm" style="float: right;">我要参加这个活动</button>
+
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $('.showForm').click(function () {
+                            $('.FormDataMessage').css({
+                                "display":"block"
+                            })
+                        })
+                    })
+                </script>
+                <div  class="col-12 FormDataMessage" style="margin-top: 15px;display: none;">
+                    <div class="row" style="border-radius: 2px;border: 1px solid #ccc;box-shadow: 0 0 5px #ccc">
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <label for="userName">您的姓名:</label><br>
+                                <input type="text" name="userName" id="userName" value="" placeholder="请输入您的姓名" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <label for="userPhone">手机号:</label><br>
+                                <input type="text" name="phone" value="" id="userPhone" placeholder="请输入您的手机号" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <label for="qqNumber">QQ号:</label><br>
+                                <input type="text" name="qqNumber" value="" id="qqNumber" placeholder="请输入您的QQ号" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <label for="idCard">您的身份证号码:</label><br>
+                                <input type="text" name="idCard" value="" id="idCard" placeholder="您的身份证号码" class="form-control">
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="{{@activity._id}}">
+                        <input type="hidden" name="toPlace" value="{{activity.toPlace}}">
+                        <div class="clearfix"></div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="button"  value="提交" onclick="postData()" class="btn btn-outline-primary">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div>
+                    <script>
+                        function postData() {
+                            var pid = '{{@activity._id}}';
+                            var toPalace = '{{@activity.toPlace}}';
+                            var userName = $('#userName').val();
+                            var phone = $('#userPhone').val();
+                            var qqNumber = $('#qqNumber').val();
+                            var idCard = $('#idCard').val();
+                            var joiner = '{{G.userinformations._id}}';
+                            // console.log(pid);
+                            // console.log(toPalace);
+                            // console.log(userName);
+                            // console.log(phone);
+                            // console.log(qqNumber);
+                            // console.log(idCard);
+                            $.get('addActivity',{
+                                pid:pid,
+                                toPlace:toPalace,
+                                userName:userName,
+                                phone:phone,
+                                qqNumber:qqNumber,
+                                idCard:idCard,
+                                joiner:joiner
+                            },function (data) {
+
+                                $('.entryCount').html(parseInt($('.entryCount').html())+1);
+                                alert(data.message);
+                                $('#userName').val("");
+                                $('#userPhone').val("");
+                                $('#qqNumber').val("");
+                                $('#idCard').val("");
+                            })
+
+                        }
+                    </script>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{{include 'default/public/footer.html'}}
+<script>
+    var Wheight = $(window).height();
+    //alert(Wheight)
+    $('.joinIN').css({"min-height":Wheight-150})
+</script>
+</body>
+</html>
